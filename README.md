@@ -4,9 +4,9 @@ PowerShell script that will sort files based off of extension from your Download
 ## How to use this script
 Edit sd-config
 
-Move sDownloads.ps1 and sd-config.csv anywhere you'd like (as long as they're in the same directory)
+Move sDownloads.ps1 and sd-config anywhere you'd like (as long as they're in the same directory)
 
-Either manually run sDownloads.ps1 or throw it on Task Scheduler
+Either manually run sDownloads.ps1 or use it with Task Scheduler
 
 ## How to edit sd-config
 Open sd-config in any text editor
