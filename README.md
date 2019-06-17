@@ -8,8 +8,6 @@ Move sDownloads.ps1 and sd-config.csv anywhere you'd like (as long as they're in
 
 Either manually run sDownloads.ps1 or throw it on Task Scheduler
 
----
-
 ## How to edit sd-config
 Open sd-config in any text editor
 
