@@ -1,11 +1,11 @@
-﻿# Check directory the directory sDownloads.ps1 runs from for sd-config file
+# Check directory sDownloads.ps1 runs from for sd-config file
 $ConfigPath = $PSScriptRoot + "\sd-config"
 
 # sd-config needs to stay with sDownloads.ps1
-# or change the path if you want sd-config.csv somewhere else
+# Change the path if you want sd-config somewhere else
 $Config = Import-Csv -Path $ConfigPath
 
-# Will work fine as long as this is the folder you use for downloads
+# Will work fine as long as you use the default Downloads folder
 $Downloads = "C:\Users\$env:UserName\Downloads\"
 
 $Files = $Downloads | Get-ChildItem
