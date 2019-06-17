@@ -2,7 +2,7 @@
 PowerShell script that will sort files based off of extension from your Downloads folder to various folders defined in the config
 
 ## How to use this script
-##### First edit sd-config.csv
+##### First edit sd-config
 ##### Move sDownloads.ps1 and sd-config.csv anywhere you'd like (as long as they're in the same directory)
 ##### Either manually run sDownloads.ps1 or throw it on Task Scheduler
 ---
