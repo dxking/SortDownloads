@@ -1,27 +1,29 @@
-# Check directory sDownloads.ps1 runs from for sd-config file
-$ConfigPath = $PSScriptRoot + "\sd-config"
 
-# sd-config needs to stay with sDownloads.ps1
-# Change the path if you want sd-config somewhere else
+# Script must be run from the same folder as sd-config
+# Otherwise change parameter ConfigPath when launching
+Param(
+    [string]$ConfigPath = ".\sd-config",
+    [string]$FolderPath = "C:\Users\$env:UserName\Downloads\",
+    [string]$LogPath = "."
+)
+
 $Config = Import-Csv -Path $ConfigPath
+$Files = $FolderPath | Get-ChildItem
+$LogName = "sdlog_$(Get-Date -Format MMddyyyy-hhmmss).txt"   
+New-Item -Path $LogPath -Name $LogName
 
-# Will work fine as long as you use the default Downloads folder
-$Downloads = "C:\Users\$env:UserName\Downloads\"
-
-$Files = $Downloads | Get-ChildItem
-$FileNames = $Files.Name
-
-ForEach($e in $Config) {
-    ForEach($f in $FileNames) {
-        $FilePath = $Downloads + $f
-        $FileExtension = [IO.Path]::GetExtension($f)
-
-        if($FileExtension -eq $e.Extension) {
-            # Create destination folder if it doesn't exist
-            if(!(Test-Path $e.Path -PathType Container)) {
-                New-Item -Path $e.Path -ItemType Directory 
+ForEach($Extension in $Config) {
+    ForEach($File in $Files) {
+        if($File.Extension -eq $Extension.Extension) {
+            if(!(Test-Path $Extension.Path -PathType Container)) {
+                New-Item -Path $Extension.Path -ItemType Directory
             }
-            Move-Item -Path $FilePath -Destination $e.Path
+            Move-Item (Join-Path $FolderPath $File) $Extension.Path -Force
+            Add-Content -Path (Join-Path $LogPath $LogName) -Value "Moved <$File> from <$FolderPath> to <$($Extension.Path)>"
         }    
     }
+}
+
+if(!(Get-Content $LogName)){
+    Remove-Item $LogName
 }
