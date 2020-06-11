@@ -21,3 +21,4 @@ I left extensions and paths in sd-config.csv to use as a template
 
 ### To Do
 - Allow generating sd-config with flag
+- Add linux support
