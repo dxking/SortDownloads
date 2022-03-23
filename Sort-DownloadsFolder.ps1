@@ -26,6 +26,18 @@ function Sort-DownloadsFolder {
   $Config = Read-ConfigFile -Path $ConfigPath
   # Reliable method to determine Downloads folder path: https://stackoverflow.com/a/57950443
   $DownloadsFolderPath = (New-Object -ComObject Shell.Application).NameSpace('shell:Downloads').Self.Path
+  $DownloadsFiles = Get-ChildItem -Path $DownloadsFolderPath -File
+
+  foreach ($File in $DownloadsFiles) {
+    $FileExtension = [System.IO.Path]::GetExtension($File).Split('.')[1]
+    $SortPath = "$DownloadsFolderPath\$FileExtension"
+
+    if (-Not (Test-Path -Path $SortPath)) {
+      New-Item -Path $SortPath -ItemType Directory | Out-Null
+    }
+
+    Move-Item -Path $File.FullName -Destination $SortPath
+  }
 }
 
 Sort-DownloadsFolder -ConfigPath "$PSScriptRoot\Sort-DownloadsFolder.json"
